@@ -5,18 +5,19 @@ class Solution {
             return ans;
         }
         String[] phone = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-          ans.add("");
-          for(int i=0; i<digits.length(); i++){
-            int digit = digits.charAt(i)-'0';
-            String letter = phone[digit];
-            List<String> next = new ArrayList<>();
-            for(String str : ans){
-                for(int j=0; j<letter.length(); j++){
-                    next.add(str + letter.charAt(j));
-                }
+         solve(digits,0,"",phone,ans);
+         return ans;
+    }
+     private void solve(String digits ,int index,String current,String[] phone,List<String> ans){
+            if(digits.length()==index){
+                ans.add(current);
+                return;
             }
-            ans = next;
-          }
-        return ans;
+            int digit = digits.charAt(index)-'0';
+            String letter = phone[digit];
+                for(int j=0; j<letter.length(); j++){
+                    char ch = letter.charAt(j);
+                    solve(digits,index+1,current+ch,phone,ans);
+                }
     }
 }
