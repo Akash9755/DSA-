@@ -10,34 +10,19 @@
  */
 class Solution {
     public ListNode doubleIt(ListNode head) {
-       ListNode reversedList = reverseList(head);
-        int curry = 0;
-        ListNode temp = reversedList;
-        while(temp != null){
-            int total = temp.val * 2 + curry;
-            temp.val = total % 10;
-             curry = total/10;
-              temp = temp.next;
+        if(head.val>=5){
+            ListNode newNode = new ListNode();
+             newNode.next = head;
+             head = newNode;
         }
-         if(curry>0){
-            ListNode last = reversedList;
-            while(last.next != null){
-                last = last.next;
+        ListNode current = head;
+        while(current != null){
+            current.val = (current.val * 2) % 10;
+            if(current.next != null && current.next.val >=5){
+                current.val++;
             }
-            last.next = new ListNode(curry);
-         }
-        ListNode result = reverseList(reversedList);
-        return result;
-    }
-    public ListNode reverseList(ListNode head){
-          ListNode prev = null;
-          ListNode current = head;
-          while(current != null){
-            ListNode front = current.next;
-            current.next = prev;
-            prev = current;
-            current = front;
+            current = current.next;
         }
-        return prev;
+        return head;
     }
 }
