@@ -10,28 +10,34 @@
  */
 class Solution {
     public ListNode doubleIt(ListNode head) {
-         ArrayList<Integer> arr = new ArrayList<>();
-        ListNode temp = head;
+       ListNode reversedList = reverseList(head);
+        int curry = 0;
+        ListNode temp = reversedList;
         while(temp != null){
-            arr.add(temp.val);
-            temp = temp.next;
+            int total = temp.val * 2 + curry;
+            temp.val = total % 10;
+             curry = total/10;
+              temp = temp.next;
         }
-        int carry = 0;
-        for(int i = arr.size()-1; i>=0; i--){
-             int total = arr.get(i) * 2 + carry;
-             arr.set(i,total%10);
-             carry = total/10;
-        }
-        
-        if(carry>0){
-            arr.add(0,carry);
-        }
-        ListNode dummy = new ListNode();
-          temp = dummy;
-         for(int num : arr){
-            temp.next = new ListNode(num);
-            temp = temp.next;
+         if(curry>0){
+            ListNode last = reversedList;
+            while(last.next != null){
+                last = last.next;
+            }
+            last.next = new ListNode(curry);
          }
-         return dummy.next;
+        ListNode result = reverseList(reversedList);
+        return result;
+    }
+    public ListNode reverseList(ListNode head){
+          ListNode prev = null;
+          ListNode current = head;
+          while(current != null){
+            ListNode front = current.next;
+            current.next = prev;
+            prev = current;
+            current = front;
+        }
+        return prev;
     }
 }
